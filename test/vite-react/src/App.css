@@ -1,42 +1,74 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
+body {
+  background: #2c3b35;
+}
+.title {
+  font-size: 64px;
+  color: #fff;
+  width: 1em;
+  position: fixed;
+  right: 20px;
+  font-family: '楷体';
+}
+.page {
+  margin: 18px;
+  padding-right: 92px;
+}
+#card_list {
   text-align: center;
-}
-
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
-}
-
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+  width: auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
 }
 
 .card {
-  padding: 2em;
+  position: relative;
+  overflow: hidden;
+  box-sizing: border-box;
+  width: 180px;
+  height: 322px;
+  padding: 36px 20px 30px;
+  border-radius: 12px;
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  justify-content: flex-end;
+  font-size: 14px;
+}
+.card:before {
+  content: '';
+  display: block;
+  position: absolute;
+  top: -28px;
+  left: 28px;
+  width: 224px;
+  height: 224px;
+  background: url(./img/card_bg.png) no-repeat center;
+  background-size: contain;
+  mix-blend-mode: multiply;
 }
 
-.read-the-docs {
-  color: #888;
+.card .name {
+  font-family: '楷体';
+  font-size: 26px;
+  width: 1em;
+  position: absolute;
+  top: 36px;
+  right: 46px;
+}
+.card .pinyin {
+  position: absolute;
+  left: 164px;
+  top: 42px;
+  transform: rotate(90deg);
+  transform-origin: 0 0;
+}
+.card .rgb,
+.card .hex {
+  line-height: 14px;
+}
+.card .cmyk {
+  margin-top: 4px;
+  font-size: 10px;
 }

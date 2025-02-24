@@ -1,40 +1,71 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { useEffect, useState } from 'react'
 import './App.css'
-import Test from './pages/Test'
+import { fontColorContrast, sortColorsByHSV } from './utils/tools'
+import colors from './data/colors.json'
+
+type Color = {
+  name: string
+  pinyin: string
+  hex: string
+  RGB: Array<number>
+  CMYK: Array<number>
+  rgb: string
+  cmyk: string
+  contrast: string
+}
 
 function App() {
-  const [count, setCount] = useState(0)
-  const clickBtn = () => {
-    setCount(count => count + 1)
+  // 颜色列表
+  // const [colorList, setColorList] = useState([])
+  // 加上ts类型
+  const [colorList, setColorList] = useState<Array<Color>>([])
+
+  useEffect(() => {
+    console.log(' 什么玩意')
+    handleColors(colors)
+  }, []) // 空数组作为第二个参数表示这个effect仅在组件挂载和卸载时运行
+
+  function handleColors(colorsArray: any) {
+    const sortColors = sortColorsByHSV(colorsArray).map((color: Color) => {
+      const { CMYK, RGB } = color
+      // return fontColorContrast(RGB)
+      return {
+        ...color,
+        cmyk: `CMYK (${CMYK.join(', ')})`,
+        rgb: `RGB (${RGB.join(', ')})`,
+        // @ts-ignore
+        contrast: fontColorContrast(RGB),
+      }
+    })
+    console.log('什么 执行了两次??? ')
+    setColorList(sortColors)
   }
 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+      <h1 className="title">中国色卡片示例</h1>
+      <div className="page">
+        <div className="content">
+          <div id="card_list">
+            {colorList.map((color, index) => (
+              <div
+                key={index}
+                className="card"
+                style={{
+                  backgroundColor: color.hex,
+                  color: color.contrast,
+                }}
+              >
+                <span className="name">{color.name}</span>
+                <span className="pinyin">{color.pinyin}</span>
+                <span className="rgb">{color.rgb}</span>
+                <span className="hex">{color.hex}</span>
+                <span className="cmyk">{color.cmyk}</span>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={clickBtn}>
-          {/* <button onClick={() => setCount((count) => count + 1)}> */}
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-      {/* 引入Test组件 */}
-      <Test />
     </>
   )
 }
