@@ -16,12 +16,9 @@ type Color = {
 
 function App() {
   // 颜色列表
-  // const [colorList, setColorList] = useState([])
-  // 加上ts类型
   const [colorList, setColorList] = useState<Array<Color>>([])
 
   useEffect(() => {
-    console.log(' 什么玩意')
     handleColors(colors)
   }, []) // 空数组作为第二个参数表示这个effect仅在组件挂载和卸载时运行
 
@@ -37,7 +34,6 @@ function App() {
         contrast: fontColorContrast(RGB),
       }
     })
-    console.log('什么 执行了两次??? ')
     setColorList(sortColors)
   }
 
