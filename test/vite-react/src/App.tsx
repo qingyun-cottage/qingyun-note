@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 import './App.css'
-import { fontColorContrast, sortColorsByHSV } from './utils/tools'
-import colors from './data/colors.json'
+import { fontColorContrast, getJSONByFetch, sortColorsByHSV } from './utils/tools'
 
 type Color = {
   name: string
@@ -19,7 +18,12 @@ function App() {
   const [colorList, setColorList] = useState<Array<Color>>([])
 
   useEffect(() => {
-    handleColors(colors)
+    getJSONByFetch('data/colors.json').then((data) => {
+      handleColors(data)
+    })
+
+
+    // handleColors(colors)
   }, []) // 空数组作为第二个参数表示这个effect仅在组件挂载和卸载时运行
 
   function handleColors(colorsArray: any) {
