@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import Shopping from './components/Shopping.vue'
+
+// ref
 </script>
 
 <template>
     <Shopping />
 </template>
 
-<style scoped>
-</style>
+<style scoped></style>
