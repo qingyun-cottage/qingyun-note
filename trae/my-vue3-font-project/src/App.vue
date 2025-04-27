@@ -13,10 +13,12 @@
         <button @click="generateSubsetFont">Generate Subset Font</button>
         <!-- 修改部分：添加对 URL 的检查 -->
         <a
-            v-if="subsetFontBlob && typeof URL !== 'undefined'"
+            v-if="subsetFontBlob && typeof URL !== 'undefined'" 
+            
             :href="URL.createObjectURL(subsetFontBlob)"
             download="subset_font.ttf"
-            >Download Subset Font</a
+        >
+            Download Subset Font</a
         >
     </div>
 </template>
@@ -64,7 +66,12 @@ const generateSubsetFont = async () => {
         const notdefGlyph = font.charToGlyph('.notdef')
         const glyphs = [notdefGlyph]
 
+        // selectedCharacters.value 去重
+        // selectedCharacters.value = [...new Set(selectedCharacters.value)]
+        // console.log('selectedCharacters.value', selectedCharacters.value)
+
         for (const char of selectedCharacters.value) {
+            console.log('char', char)
             const glyph = font.charToGlyph(char)
             if (glyph) {
                 glyphs.push(glyph)
@@ -96,8 +103,8 @@ const generateSubsetFont = async () => {
         const link = document.createElement('a')
         link.href = URL.createObjectURL(subsetFontBlob.value)
         // 修改部分：获取上传文件的文件名并添加压缩后缀
-        const originalFileName = file.value.name.replace(/\.[^/.]+$/, '');
-        link.download = `${originalFileName}_subset.ttf`;
+        const originalFileName = file.value.name.replace(/\.[^/.]+$/, '')
+        link.download = `${originalFileName}_subset.ttf`
         link.click()
         // 释放 URL 对象
         URL.revokeObjectURL(link.href)
