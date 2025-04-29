@@ -1,0 +1,165 @@
+:root {
+  --page-bg-color: #f3f5f6; // 页面背景色
+
+  // 动画配置
+  --auflo-transition-duration: 0.2s;
+  --auflo-transition-duration-fast: 0.1s;
+  --auflo-transition-duration-slow: 0.3s;
+  --auflo-ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --auflo-ease-in: cubic-bezier(0.4, 0, 1, 1);
+  --auflo-ease-out: cubic-bezier(0, 0, 0.2, 1);
+
+  --auflo-btn-white: #fff;
+  --auflo-btn-white-hover: #e7e8eb;
+  --user-bar-hover: #e7e8eb;
+  --hover-gray: #e7e8eb;
+}
+
+
+
+@keyframes moveFormBottom {
+  from {
+    transform: translateY(2rem);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.fullscreen {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  z-index: 9999;
+  left: 0;
+  top: 0;
+  &.animation {
+    animation: fadeIn 2s ease forwards;
+  }
+}
+
+.container {
+  display: flex;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 99;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  user-select: none;
+  background: var(--page-bg-color);
+}
+
+.leftBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-grow: 1;
+  // padding: 5.2rem;
+  // justify-content: center;
+  // overflow-x: auto;
+}
+.rightBox {
+  display: flex;
+  // fix 1080p
+  // TODO: 适配不同分辨率
+  // width: 50rem;
+  width: 30%;
+}
+
+// TODO: 方便开发 先隐藏
+// @media screen and (max-width: 76rem) {
+//   .leftBox {
+//     display: none;
+//   }
+//   .rightBox {
+//     width: 100%;
+//     min-width: unset;
+//   }
+// }
+
+.lottie {
+  pointer-events: none;
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  opacity: 0.3;
+  pointer-events: none;
+  z-index: 1;
+  overflow: hidden;
+  :global(.lottie-player) {
+    justify-content: flex-start;
+    width: 120%;
+    height: 130%;
+  }
+}
+
+.animation {
+  animation: moveFormBottom 0.5s ease forwards;
+}
+.taskContainer {
+  overflow-x: auto;
+  overflow-y: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100rem;
+  height: 20rem;
+  position: relative;
+  &.animation {
+    animation: moveFormBottom 0.5s ease forwards;
+  }
+
+  .taskList {
+    display: flex;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    transform-origin: top left;
+    transform: scale(0.3);
+  }
+  .taskItem {
+    position: relative;
+    .taskFinishedText {
+      position: absolute;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      top: 100%;
+      width: 100%;
+      height: 100%;
+      z-index: 99;
+      transform: scale(3);
+    }
+    .taskFinishedText + * {
+      opacity: 0.4;
+    }
+    > * {
+      height: 65rem;
+      border: none;
+    }
+  }
+  .taskItem + .taskItem {
+    margin-left: 4rem;
+  }
+}
+
+@media screen and (min-width: 1920px) {
+  .taskContainer {
+    height: 26rem;
+    width: 110rem;
+    .taskList {
+      transform: scale(0.36);
+    }
+  }
+}
