@@ -45,7 +45,13 @@ const getListDetail = async () => {
         const item = state.currentList[i]
         const res = await getDetail(item.marketModelName, item.productCategory)
         console.log(res)
-        item.detail = res
+        item.detail = res.map(item => {
+            const list = item.list || [{}]
+            return {
+                ...item,
+                ...list[0],
+            }
+        })
     }
 }
 
@@ -100,7 +106,7 @@ const getListDetail = async () => {
                                             detail.userPrice < 300),
                                 }"
                             >
-                                {{ detail.materialSubCategory }}
+                                {{ detail.materialCategory }}
                                 <template v-if="detail.ram">
                                     ({{ detail.ram }}+{{ detail.rom }})
                                 </template>
